@@ -1,0 +1,5 @@
+config.el
+elpa/
+auto-save-list/
+recentf
+custom.el

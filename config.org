@@ -1,0 +1,207 @@
+#+TITLE: My Emacs configuration
+#+AUTHOR: Sushil Patil
+#+OPTIONS: H:2 num:nil timestamp:nil
+
+* Better defaults
+ * Set custom settings separately in `custom.el` file.
+  #+BEGIN_SRC emacs-lisp
+    (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+    (load custom-file)
+  #+END_SRC
+ * Do not create backup files.
+  #+BEGIN_SRC emacs-lisp
+    (setq backup-inhibited t)
+  #+END_SRC
+ * Better unique buffer names
+   #+BEGIN_SRC emacs-lisp
+     (use-package uniquify
+       :init
+       (setq uniquify-buffer-name-style 'forward))
+   #+END_SRC
+ * Display line numbers
+     #+BEGIN_SRC emacs-lisp
+       (use-package display-line-numbers
+	 :hook ((prog-mode) . display-line-numbers-mode)
+	 )
+     #+END_SRC
+ * Use "y or n" instead of "yes or no"
+    #+BEGIN_SRC emacs-lisp
+      (fset 'yes-or-no-p 'y-or-n-p)
+    #+END_SRC
+ * Easier window switching
+   #+BEGIN_SRC emacs-lisp
+     (use-package windmove
+       :config
+       (windmove-default-keybindings 'shift)
+       )
+  #+END_SRC
+
+   - Pop up key completions help
+   #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :config
+       (which-key-mode))
+   #+END_SRC
+
+* Visual customizations
+  * Disable various tool & menu bars
+    #+BEGIN_SRC emacs-lisp
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+    #+END_SRC
+  * Use solarized theme
+   #+BEGIN_SRC emacs-lisp
+     (use-package solarized-theme
+       :config
+       (load-theme 'solarized-light t))
+   #+END_SRC
+  * Use `moody` for modeline
+    #+BEGIN_SRC emacs-lisp
+      (use-package moody
+	:config
+	(setq x-underline-at-descent-line t)
+	(moody-replace-mode-line-buffer-identification)
+	(moody-replace-vc-mode))
+    #+END_SRC
+  * Disable startup messages
+     #+BEGIN_SRC emacs-lisp
+       (setq inhibit-splash-screen t
+	     inhibit-startup-message t
+	     initial-scratch-message "")
+     #+END_SRC
+
+* Smart parenthesis
+** =smartparens=
+  Automatically add parenthesis pairs and highlight them in
+  programming mode.
+   #+BEGIN_SRC emacs-lisp
+     (use-package smartparens
+       :config
+       (progn
+	 (require 'smartparens-config)
+	 (setq smartparens-strict-mode t)
+	 (add-hook 'prog-mode-hook 'smartparens-mode)
+	 (add-hook 'prog-mode-hook 'show-smartparens-mode)
+	 )
+       )
+   #+END_SRC
+** =rainbow-delimiters=
+   Use colored parenthesis and braces to quickly identify pairs
+    #+BEGIN_SRC emacs-lisp
+      (use-package rainbow-delimiters
+	:config
+	(add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+    #+END_SRC
+* Spellcheck
+  #+BEGIN_SRC emacs-lisp
+    (use-package flyspell
+      :config
+      (add-hook 'text-mode-hook 'flyspell-mode)
+      (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+      (add-hook 'git-commit-mode-hook 'flyspell-mode)
+      )
+  #+END_SRC
+
+* Auto-completion
+** =company=
+  #+BEGIN_SRC emacs-lisp
+    (use-package company
+      :config
+      (add-hook 'prog-mode-hook 'company-mode)
+      )
+  #+END_SRC
+
+** =ivy=
+   #+BEGIN_SRC emacs-lisp
+     (use-package ivy
+       :bind
+       ("C-x b" . ivy-switch-buffer)
+       :config
+       (ivy-mode 1)
+       (setq ivy-use-virtual-buffers t)
+       (setq ivy-count-format "(%d/%d) ")
+       )
+   #+END_SRC
+
+** =swiper=
+   #+BEGIN_SRC emacs-lisp
+     (use-package swiper
+       :bind
+       ("C-s" . swiper)
+       )
+   #+END_SRC
+* Project management
+** Magit
+  * Show `magit` status using `C-x g`.
+  * Commit summary text should fit in 50 columns.
+    #+BEGIN_SRC emacs-lisp
+      (use-package magit
+	:bind
+	("C-x g" . magit-status)
+	:init
+	(setq git-commit-summary-max-length 50))
+    #+END_SRC
+
+** Projectile
+  #+BEGIN_SRC emacs-lisp
+    (use-package projectile
+      :bind-keymap
+      ("C-c p" . projectile-command-map)
+      )
+  #+END_SRC
+
+* Org
+  * Use syntax highlightling in the code blocks
+  * Open code in current window while editing code block
+  * Use ⤵ instead of ellipsis while hiding the section
+  * Use symbols instead of asterisk for bullets
+  * Do not convert underscores to subscripts
+  * Do not include timestamps in =HTML= exports
+  * Do not add validation link for =HTML= exports
+  * Use `htmlize` to export `html` files
+  * =<el + TAB= inserts =emacs-lisp= code block
+  #+BEGIN_SRC emacs-lisp
+    (use-package org
+      :init
+      (progn
+	(setq org-src-fontify-natively t
+	      org-src-window-setup 'current-window
+	      org-ellipsis "⤵"
+	      org-export-with-sub-superscripts nil
+	      org-html-include-timestamps nil
+	      org-html-validation-link nil
+	      ))
+      :config
+      (use-package org-bullets
+	:init
+	(add-hook 'org-mode-hook 'org-bullets-mode))
+      (use-package htmlize)
+      (add-to-list 'org-structure-template-alist
+		   '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+      )
+  #+END_SRC
+
+* Language specific modes
+** =C=
+  #+BEGIN_SRC emacs-lisp
+	(use-package cc-mode
+	  :config
+	  (setq tab-width 4
+		c-basic-offset 4
+		c-set-style "bsd"
+		indent-tabs-mode t
+		)
+	  )
+  #+END_SRC
+
+** =yaml=
+  #+BEGIN_SRC emacs-lisp
+    (use-package yaml-mode)
+  #+END_SRC
+
+** =Dockerfile=
+   #+BEGIN_SRC emacs-lisp
+     (use-package dockerfile-mode
+       :mode ("Dockerfile\\'" . dockerfile-mode))
+   #+END_SRC
