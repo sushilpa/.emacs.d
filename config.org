@@ -183,6 +183,19 @@
   #+END_SRC
 
 * Language specific modes
+** =elixir=
+   #+BEGIN_SRC emacs-lisp
+     (use-package elixir-mode
+       :mode
+       ("\\.ex\\'" "\\.exs\\'" "mix\\.lock\\'")
+       :config
+       (use-package alchemist)
+       )
+   #+END_SRC
+** =erlang=
+   #+BEGIN_SRC emacs-lisp
+     (use-package erlang)
+   #+END_SRC
 ** =C=
   #+BEGIN_SRC emacs-lisp
 	(use-package cc-mode
