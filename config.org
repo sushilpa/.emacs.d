@@ -17,12 +17,6 @@
      (require 'use-package-ensure)
      (setq use-package-always-ensure t)
    #+END_SRC
- * Better unique buffer names
-   #+BEGIN_SRC emacs-lisp
-     (use-package uniquify
-       :init
-       (setq uniquify-buffer-name-style 'forward))
-   #+END_SRC
  * Display line numbers
      #+BEGIN_SRC emacs-lisp
        (use-package display-line-numbers
