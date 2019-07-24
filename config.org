@@ -6,7 +6,7 @@
  * Set custom settings separately in `custom.el` file.
   #+BEGIN_SRC emacs-lisp
     (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-    (load custom-file)
+    (load custom-file t)
   #+END_SRC
  * Do not create backup files.
   #+BEGIN_SRC emacs-lisp
