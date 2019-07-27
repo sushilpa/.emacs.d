@@ -232,3 +232,7 @@
      (use-package dockerfile-mode
        :mode ("Dockerfile\\'" . dockerfile-mode))
    #+END_SRC
+** =CMake=
+   #+BEGIN_SRC emacs-lisp
+     (use-package cmake-mode)
+   #+END_SRC
