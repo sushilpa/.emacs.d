@@ -236,3 +236,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package cmake-mode)
    #+END_SRC
+** =Thrift=
+   #+BEGIN_SRC emacs-lisp
+     (use-package thrift)
+   #+END_SRC
