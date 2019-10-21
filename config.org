@@ -27,6 +27,11 @@
     #+BEGIN_SRC emacs-lisp
       (fset 'yes-or-no-p 'y-or-n-p)
     #+END_SRC
+ * Enter into debugger on error
+   #+BEGIN_SRC emacs-lisp
+     (setq debug-on-error t)
+
+   #+END_SRC
  * Easier window switching
    #+BEGIN_SRC emacs-lisp
      (use-package windmove
