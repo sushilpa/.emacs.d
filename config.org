@@ -243,3 +243,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package thrift)
    #+END_SRC
+* Flycheck
+  On the fly syntax checking
+  #+BEGIN_SRC emacs-lisp
+    (use-package flycheck
+      :init
+      (global-flycheck-mode t))
+  #+END_SRC
