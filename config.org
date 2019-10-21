@@ -210,18 +210,21 @@
    #+BEGIN_SRC emacs-lisp
      (use-package erlang)
    #+END_SRC
-** =C=
+** =CXX=
   #+BEGIN_SRC emacs-lisp
-	(use-package cc-mode
-	  :config
-	  (setq tab-width 4
-		c-basic-offset 4
-		c-set-style "bsd"
-		indent-tabs-mode t
-		)
-	  )
+    (use-package cc-mode
+      :config
+      (setq tab-width 4
+	    c-basic-offset 4
+	    c-set-style "bsd"
+	    indent-tabs-mode t
+	    )
+      )
   #+END_SRC
-
+  Use better syntax highlighting for C++
+  #+BEGIN_SRC emacs-lisp
+    (use-package modern-cpp-font-lock)
+  #+END_SRC
 ** =yaml=
   #+BEGIN_SRC emacs-lisp
     (use-package yaml-mode)
